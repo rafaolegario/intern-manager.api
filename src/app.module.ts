@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config' 
+import { ConfigModule } from '@nestjs/config'
 import { envSchema } from './env'
 import { HttpModule } from './http/http.module'
-
+import { UseCasesModule } from './use-cases/useCases.module'
 
 @Module({
   imports: [
@@ -11,6 +11,7 @@ import { HttpModule } from './http/http.module'
       isGlobal: true,
     }),
     HttpModule,
+    UseCasesModule
   ],
 
   providers: [],

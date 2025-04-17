@@ -1,1 +1,1 @@
-export class HttpModule{}
+export class HttpModule {}
