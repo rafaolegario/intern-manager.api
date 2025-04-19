@@ -17,5 +17,5 @@ export interface InternDTO {
   endDate: Date
   delayed: number
   absent: number
-  rfIdCard?: string
+  rfIdCard: string 
 }

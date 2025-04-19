@@ -2,7 +2,6 @@ import { ConflictException, Injectable } from "@nestjs/common"
 import { randomUUID } from "node:crypto"
 import { AddressDTO } from "src/@types/address"
 import { InternDTO } from "src/@types/intern"
-import { AddressRepository } from "src/repositories/address-repository"
 import { InternRepository } from "src/repositories/intern-repository"
 
 
@@ -33,7 +32,6 @@ interface CreateInternRequest {
 export class CreateInternUseCase {
   constructor(
     private InternRepository: InternRepository,
-    private AddressRepository: AddressRepository
   ){}
 
   async execute({
@@ -58,9 +56,10 @@ export class CreateInternUseCase {
     university,
 
   }: CreateInternRequest): Promise<{}> {
-    const intern = await this.InternRepository.findByCpf(cpf)
+    const internCpf = await this.InternRepository.findByCpf(cpf)
+    const internEmail = await this.InternRepository.findByEmail(email)
 
-    if(intern){
+    if(internCpf || internEmail){
       throw new ConflictException('Intern already exists!')
     }
 
@@ -85,7 +84,7 @@ export class CreateInternUseCase {
       delayed: 0,
       absent: 0,
       onWork: false,
-      rfIdCard: undefined
+      rfIdCard: ''
     }
 
     const addressData : AddressDTO = {
@@ -98,10 +97,9 @@ export class CreateInternUseCase {
       internId
     }
 
-    await this.InternRepository.create(internData)
-    await this.AddressRepository.create(addressData)
+    await this.InternRepository.create(internData, addressData)
+    
 
     return {}
-
   }
 }
