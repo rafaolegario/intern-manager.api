@@ -7,7 +7,7 @@ import { AddressDTO } from "src/@types/address"
 @Injectable()
 export class PrismaInternRepository implements InternRepository {
   constructor(private prisma: PrismaService) {}
-
+ 
   async create(intern: InternDTO, address: AddressDTO): Promise<void> {
     await this.prisma.$transaction(async (prisma) => {
       await prisma.intern.create({
@@ -74,4 +74,20 @@ export class PrismaInternRepository implements InternRepository {
       data: intern
     })
   }
+
+  async findById(id: string) {
+    const intern =  await this.prisma.intern.findUnique({
+      where: { id }
+    })
+
+    if(!intern) return null
+
+    const internDTO: InternDTO = {
+      ...intern,
+      salary: intern.salary.toNumber(), 
+    }
+
+    return internDTO
+  }
+
 }
