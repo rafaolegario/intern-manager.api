@@ -31,13 +31,12 @@ export class CreateActivityUseCase {
       description,
       dueDate,
       status: 'unfinished',
-      internsIdScore: internIds.map(internId => ({
-        id: internId,
-        score: 0
-      }))
     }
 
     await this.activityRepository.create(activityData)
+     for (const internId of internIds) {
+      await this.activityRepository.makeRelationship(internId, activityId)
+    }
     
     return {}
 
