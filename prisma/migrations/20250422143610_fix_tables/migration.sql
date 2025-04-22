@@ -36,6 +36,19 @@ CREATE TABLE "Address" (
     CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Activity" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "dueDate" TIMESTAMP(3) NOT NULL,
+    "status" TEXT NOT NULL,
+    "internsIdScore" JSONB NOT NULL,
+    "internId" TEXT,
+
+    CONSTRAINT "Activity_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Intern_cpf_key" ON "Intern"("cpf");
 
@@ -47,3 +60,6 @@ CREATE UNIQUE INDEX "Address_internId_key" ON "Address"("internId");
 
 -- AddForeignKey
 ALTER TABLE "Address" ADD CONSTRAINT "Address_internId_fkey" FOREIGN KEY ("internId") REFERENCES "Intern"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Activity" ADD CONSTRAINT "Activity_internId_fkey" FOREIGN KEY ("internId") REFERENCES "Intern"("id") ON DELETE SET NULL ON UPDATE CASCADE;
