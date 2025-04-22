@@ -1,4 +1,4 @@
-import {  BadRequestException, Controller, Get, Inject, Post } from '@nestjs/common'
+import {  BadRequestException, Controller, Get, Inject } from '@nestjs/common'
 import { FetchAllInternsUseCase } from 'src/use-cases/fetch-all-interns.service'
 
 @Controller('/interns')
