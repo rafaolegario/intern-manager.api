@@ -65,4 +65,13 @@ export class PrismaInternRepository implements InternRepository {
 
     return address
   }
+
+  async save(intern: InternDTO){
+    await this.prisma.intern.update({
+      where: {
+        id: intern.id,
+      },
+      data: intern
+    })
+  }
 }
