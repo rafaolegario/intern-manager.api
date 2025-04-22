@@ -9,7 +9,7 @@ interface CreateActivityBodySchema {
   internIds: string[]
 }
 
-@Controller('/activitys')
+@Controller('/activities')
 export class CreateActivityController {
 
   constructor(
