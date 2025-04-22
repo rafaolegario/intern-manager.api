@@ -15,27 +15,28 @@ datasource db {
 }
 
 model Intern {
-  id         String     @id @default(uuid())
-  name       String
-  gender     String
-  age        Int
-  cpf        String     @unique
-  phone      String
-  email      String     @unique
-  course     String
-  university String
-  salary     Decimal
-  role       String
-  onWork     Boolean
-  getInHour  String
-  getOutHour String
-  startDate  DateTime
-  endDate    DateTime
-  delayed    Int
-  absent     Int
-  rfIdCard   String
-  Address    Address?
-  Activity   Activity[]
+  id                    String                  @id @default(uuid())
+  name                  String
+  gender                String
+  age                   Int
+  cpf                   String                  @unique
+  phone                 String
+  email                 String                  @unique
+  course                String
+  university            String
+  salary                Decimal
+  role                  String
+  onWork                Boolean
+  getInHour             String
+  getOutHour            String
+  startDate             DateTime
+  endDate               DateTime
+  delayed               Int
+  absent                Int
+  rfIdCard              String
+  Address               Address?
+  Activity              Activity[]
+  ActivityParticipation ActivityParticipation[]
 }
 
 model Address {
@@ -50,12 +51,21 @@ model Address {
 }
 
 model Activity {
-  id             String   @id @default(uuid())
-  title          String
-  description    String
-  dueDate        DateTime
-  status         String
-  internsIdScore Json
-  Intern         Intern?  @relation(fields: [internId], references: [id])
-  internId       String?
+  id                    String                  @id @default(uuid())
+  title                 String
+  description           String
+  dueDate               DateTime
+  status                String
+  ActivityParticipation ActivityParticipation[]
+  Intern                Intern?                 @relation(fields: [internId], references: [id])
+  internId              String?
+}
+
+model ActivityParticipation {
+  id         String   @id @default(uuid())
+  internId   String
+  activityId String
+  score      Int      @default(0)
+  intern     Intern   @relation(fields: [internId], references: [id])
+  activity   Activity @relation(fields: [activityId], references: [id])
 }
