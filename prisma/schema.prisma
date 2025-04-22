@@ -15,13 +15,13 @@ datasource db {
 }
 
 model Intern {
-  id         String   @id @default(uuid())
+  id         String     @id @default(uuid())
   name       String
   gender     String
   age        Int
-  cpf        String   @unique
+  cpf        String     @unique
   phone      String
-  email      String   @unique
+  email      String     @unique
   course     String
   university String
   salary     Decimal
@@ -35,6 +35,7 @@ model Intern {
   absent     Int
   rfIdCard   String
   Address    Address?
+  Activity   Activity[]
 }
 
 model Address {
@@ -46,4 +47,15 @@ model Address {
   city         String
   internId     String @unique
   intern       Intern @relation(fields: [internId], references: [id])
+}
+
+model Activity {
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  dueDate        DateTime
+  status         String
+  internsIdScore Json
+  Intern         Intern?  @relation(fields: [internId], references: [id])
+  internId       String?
 }
