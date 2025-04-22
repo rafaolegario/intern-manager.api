@@ -7,5 +7,6 @@ export interface InternRepository {
   findByEmail(email:string): Promise<InternDTO | null>
   fetchAll(): Promise<InternDTO[]>
   findAddressByInternId(id:string): Promise<AddressDTO>
+  findById(id:string): Promise<InternDTO | null>
   save(intern:InternDTO): Promise<void>
 }
